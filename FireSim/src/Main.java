@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends JPanel implements KeyListener, ActionListener, MouseListener {
     Fire f = new Fire(920,560);
@@ -14,12 +15,17 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         Main m = new Main();
     }
 
+    public ArrayList<WorldPoint> getRequestPoints() {
+        ArrayList<WorldPoint> loc = new ArrayList<WorldPoint>();
+
+    }
+
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, 2000, 2000);
-        top.paint(g);
-        //f.update();
+        //top.paint(g);
+        f.update();
         f.paint(g2);
         updateFPS(g2);
         g2.drawString("Total Points: " + f.firePoints.size(),10,20);

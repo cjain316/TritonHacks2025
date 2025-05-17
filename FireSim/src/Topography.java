@@ -52,10 +52,10 @@ public class Topography {
         }
     }
 
-    public Point GetWorldCoords(Point p){
+    public Point GetWorldCoords(Point p) {
         double x = topLeft.x + (double) (topLeft.x - bottomRight.x) /WIDTH;
         double y = bottomRight.y + (double) (bottomRight.y - topLeft.y) /HEIGHT;
-        return new Point((int)x, (int)y); //Jitter Shew
+        return new Point((int)x, (int)y);
     }
 
     public double interpolateZ(double x, double y) {
