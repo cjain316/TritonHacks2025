@@ -1,9 +1,14 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Main extends JPanel implements KeyListener, ActionListener, MouseListener {
     public static void main(String[] args) {
         Main m = new Main();
+    }
+
+    public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
     }
 
     Timer t;
