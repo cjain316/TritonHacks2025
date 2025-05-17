@@ -16,10 +16,14 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         g2.fillRect(0, 0, 2000, 2000);
         f.update();
         f.paint(g2);
+        updateFPS(g2);
+        g2.drawString("Total Points: " + f.firePoints.size(),10,20);
+    }
+
+    public void updateFPS(Graphics2D g2) {
         fps.update();
         g2.setColor(Color.BLACK);
         g2.drawString("FPS: " + fps.FPS,10,10);
-        g2.drawString("Total Points: " + f.firePoints.size(),10,20);
     }
 
     Timer t;

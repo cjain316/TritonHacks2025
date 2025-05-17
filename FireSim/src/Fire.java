@@ -9,10 +9,13 @@ public class Fire {
     private double ROC;
     private double duePoints;
 
+    private Random rand;
+
     public Fire(int initx, int inity) {
         this.firePoints = new ArrayList<>();
         this.ROC = 57;
         this.duePoints = 0;
+        this.rand = new Random(System.currentTimeMillis());
 
         int size = 5;
         firePolygon = new Polygon();
@@ -43,12 +46,15 @@ public class Fire {
     public void paint(Graphics g) {
         g.setColor(new Color(250, 130, 0));
         g.fillPolygon(firePolygon);
+        g.setColor(Color.BLACK);
+        for (Point p: firePoints) {
+            g.fillRect(p.x-5,p.y-5,10,10);
+        }
     }
 
     // Generate a new point at a threshold distance away from the polygon border
     private Point generatePointNearBorder() {
         int maxTries = 100;
-        Random rand = new Random();
 
         for (int i = 0; i < maxTries; i++) {
             // Pick a random edge of the polygon
