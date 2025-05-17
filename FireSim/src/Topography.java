@@ -8,6 +8,9 @@ public class Topography {
     public Point topLeft = new Point(119,37);
     public Point bottomRight = new Point(111, 35);
 
+    public final int WIDTH = 1920;
+    public final int HEIGHT = 1080;
+
     public Topography() {
         this.points = new ArrayList<>();
     }
@@ -23,6 +26,12 @@ public class Topography {
                 g.fillRect(x,y,1,1);
             }
         }
+    }
+
+    public Point GetWorldCoords(Point p){
+        double x = topLeft.x + (double) (topLeft.x - bottomRight.x) /WIDTH;
+        double y = bottomRight.y + (double) (bottomRight.y - topLeft.y) /HEIGHT;
+        return new Point((int)x, (int)y); //Jitter Shew
     }
 
     public double interpolateZ(double x, double y) {
