@@ -6,6 +6,7 @@ import java.io.IOException;
 public class Main extends JPanel implements KeyListener, ActionListener, MouseListener {
     Fire f = new Fire(920,560);
     FPSCounter fps = new FPSCounter();
+    Topography top = new Topography();
 
     public static void main(String[] args) throws IOException {
         Request req = new Request();
@@ -17,7 +18,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, 2000, 2000);
-        f.update();
+        //f.update();
         f.paint(g2);
         updateFPS(g2);
         g2.drawString("Total Points: " + f.firePoints.size(),10,20);
@@ -45,6 +46,8 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         t = new Timer(1, this);
         t.start();
         f.setVisible(true);
+
+        top.addPoint(new Point3D(100,100,100));
     }
 
     @Override
