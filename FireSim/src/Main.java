@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class Main extends JPanel implements KeyListener, ActionListener, MouseListener {
     Fire f = new Fire(920,560);
     FPSCounter fps = new FPSCounter();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Request req = new Request();
+        System.out.println(req.get("json?locations=39.7391536%2C-104.9847034"));
         Main m = new Main();
     }
 
