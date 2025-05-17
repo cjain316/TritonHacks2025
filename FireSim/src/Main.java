@@ -49,8 +49,10 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         f.setVisible(true);
 
         top.addPoint(new Point3D(100,100,100));
+        top.addPoint(new Point3D(500,500,54));
         top.addPoint(new Point3D(1000,1000, 200));
         top.addPoint(new Point3D(1000,100, 200));
+        top.addPoint(new Point3D(1600,500,300));
     }
 
     @Override
