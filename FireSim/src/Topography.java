@@ -1,8 +1,12 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Topography {
     private ArrayList<Point3D> points;
     private static final double EPSILON = 1e-6;
+
+    public Point topLeft = new Point(119,37);
+    public Point bottomRight = new Point(111, 35);
 
     public Topography() {
         this.points = new ArrayList<>();
@@ -10,6 +14,15 @@ public class Topography {
 
     public void addPoint(Point3D point) {
         points.add(point);
+    }
+
+    public void paint(Graphics g) {
+        for (int x = 0; x < 1920; x++) {
+            for (int y = 0; y < 1200; y++) {
+                g.setColor(new Color((int)(interpolateZ(x, y)), 0, 0));
+                g.fillRect(x,y,1,1);
+            }
+        }
     }
 
     public double interpolateZ(double x, double y) {

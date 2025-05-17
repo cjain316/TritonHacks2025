@@ -9,8 +9,8 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
     Topography top = new Topography();
 
     public static void main(String[] args) throws IOException {
-        Request req = new Request();
-        System.out.println(req.get("json?locations=39.7391536%2C-104.9847034"));
+        //Request req = new Request();
+        //System.out.println(req.get("json?locations=39.7391536%2C-104.9847034"));
         Main m = new Main();
     }
 
@@ -18,6 +18,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, 2000, 2000);
+        top.paint(g);
         //f.update();
         f.paint(g2);
         updateFPS(g2);
@@ -48,6 +49,8 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         f.setVisible(true);
 
         top.addPoint(new Point3D(100,100,100));
+        top.addPoint(new Point3D(1000,1000, 200));
+        top.addPoint(new Point3D(1000,100, 200));
     }
 
     @Override
