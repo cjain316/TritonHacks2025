@@ -23,9 +23,7 @@ public class Topography {
         int minZ = Integer.MAX_VALUE;
         int maxZ = Integer.MIN_VALUE;
 
-        if (interpolateZ(0,0) == -1.111111) {
-            return;
-        }
+        if (interpolateZ(0,0) == -1000000) {return;}
 
         for (Point3D p : this.points) {
             if (p.z < minZ) minZ = p.z;
@@ -41,17 +39,21 @@ public class Topography {
                 double normalized = (interpolatedZ - minZ) / rangeZ;
 
                 int red = (int)(normalized * 255);
+                if (red > 255) {red = 255;}
+                if (red < 0) {red = 0;}
                 int green = (int)((1 - normalized) * 255);
+                if (green > 255) {green = 255;}
+                if (green < 0) {green = 0;}
 
                 g.setColor(new Color(red, green, 0));
                 g.fillRect(x, y, 1, 1);
             }
         }
 
-        for (Point3D p: points) {
-            g.setColor(Color.BLACK);
-            g.fillRect(p.x-2,p.y-2,4,4);
-        }
+//        for (Point3D p: points) {
+//            g.setColor(Color.BLACK);
+//            g.fillRect(p.x-2,p.y-2,4,4);
+//        }
     }
 
     public WorldPoint getWorldCoords(Point p) {
@@ -61,22 +63,15 @@ public class Topography {
     }
 
     public Point worldToScreen(WorldPoint point) {
-        // Longitude maps to X axis
         double xRatio = (point.longitude - topLeft.longitude) / (bottomRight.longitude - topLeft.longitude);
-
-        // Latitude maps to Y axis - note that latitude decreases as you go down the screen
         double yRatio = (topLeft.latitude - point.latitude) / (topLeft.latitude - bottomRight.latitude);
-
         int x = (int) (xRatio * WIDTH);
         int y = (int) (yRatio * HEIGHT) - HEIGHT;
-
         return new Point(x, y);
     }
 
     public double interpolateZ(double x, double y) {
-        if (points.isEmpty()) {
-            return -1.111111;
-        }
+        if (points.isEmpty()) {return -1000000;}
 
         double numerator = 0.0;
         double denominator = 0.0;

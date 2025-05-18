@@ -17,8 +17,8 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
 
     public ArrayList<WorldPoint> getRequestPoints() {
         ArrayList<WorldPoint> loc = new ArrayList<WorldPoint>();
-        for (int x = 0; x < 1920; x += 40) {
-            for (int y = 0; y < 1200; y += 40) {
+        for (int x = 0; x < 1920; x += 5) {
+            for (int y = 0; y < 1200; y += 5) {
                 loc.add(top.getWorldCoords(new Point(x, y)));
             }
         }
@@ -70,9 +70,9 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         for (int i = 0; i < locations.size(); i++) {
             //double lat = (double)Math.round(p.latitude * 10000000d) / 10000000d;
             //double lon = (double)Math.round(p.longitude * 10000000d) / 10000000d;
-            System.out.println(locations.get(i).longitude);
+            //System.out.println(locations.get(i).longitude);
             url += ""+locations.get(i).longitude+"%2C"+locations.get(i).latitude+"|";
-            if (i % 500 == 0 && i != 0) {
+            if (i % 450 == 0 && i != 0) {
                 url = url.substring(0,url.length()-1);
                 System.out.println(url);
                 String fin = req.get(url);
@@ -85,15 +85,16 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
                 ArrayList<HashMap<String, Object>> burg = (ArrayList<HashMap<String, Object>>) j.getMap().get("results");
                 for (HashMap<String, Object> h: burg) {
                     double altitude = Double.parseDouble(h.get("elevation").toString());
-                    HashMap<String, Object> location = (HashMap<String,Object>) h.get("location");
+                    HashMap<String, Object> location = (HashMap<String, Object>) h.get("location");
                     double latitude = Double.parseDouble(location.get("lat").toString());
                     double longitude = Double.parseDouble(location.get("lng").toString());
 
                     WorldPoint wp = new WorldPoint(latitude, longitude);
                     Point tp = top.worldToScreen(wp);
-                    top.addPoint(new Point3D(tp.x,tp.y,(int)altitude));
+                    top.addPoint(new Point3D(tp.x, tp.y, (int) altitude));
                     System.out.println(altitude);
                 }
+                req = new Request();
                 url = "json?locations=";
             }
         }
