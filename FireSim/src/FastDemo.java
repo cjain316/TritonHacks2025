@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main extends JPanel implements KeyListener, ActionListener, MouseListener {
+public class FastDemo extends JPanel implements KeyListener, ActionListener, MouseListener {
     Fire f;
     FPSCounter fps = new FPSCounter();
     Topography top;
@@ -15,7 +15,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
     Request req = new Request();
 
     public static void main(String[] args) throws IOException {
-        Main m = new Main();
+        FastDemo m = new FastDemo();
     }
 
     public ArrayList<WorldPoint> getRequestPoints(int resolution) {
@@ -36,6 +36,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         g2.fillRect(0, 0, 2000, 2000);
         //eftop.paint(g);
         if (f != null) {
+            f.ROC = 57;
             f.update(top);
             f.paint(g2);
         }
@@ -105,7 +106,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         t.savePoints();
     }
 
-    public Main() throws IOException {
+    public FastDemo() throws IOException {
         JFrame f = new JFrame("LaFireSim2025");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -125,6 +126,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
 
         top = new Topography("32.887667 -117.2559635 32.8777387 -117.2282074");
         eftop = new Topography("32.887668 -117.2559634 32.8777386 -117.2282073");
+        this.f = new Fire(250,100, top);
         //eftop = new Topography(new WorldPoint(32.887668, -117.2559634), new WorldPoint(32.8777386, -117.2282073));
         //calculateTopFromReqs(eftop, 240);
     }

@@ -79,7 +79,7 @@ public class Topography {
 
                 g.setColor(new Color(red, green, 0));
                 g.fillRect(x, y, 1, 1);
-                System.out.println("Calculated pixel: " + (x*1920 + y + 1) + " of " + (1920*1200));
+                //System.out.println("Calculated pixel: " + (x*1920 + y + 1) + " of " + (1920*1200));
             }
         }
 

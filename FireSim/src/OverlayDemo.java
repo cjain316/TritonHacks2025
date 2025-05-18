@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main extends JPanel implements KeyListener, ActionListener, MouseListener {
+public class OverlayDemo extends JPanel implements KeyListener, ActionListener, MouseListener {
     Fire f;
     FPSCounter fps = new FPSCounter();
     Topography top;
@@ -15,7 +15,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
     Request req = new Request();
 
     public static void main(String[] args) throws IOException {
-        Main m = new Main();
+        OverlayDemo m = new OverlayDemo();
     }
 
     public ArrayList<WorldPoint> getRequestPoints(int resolution) {
@@ -34,7 +34,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, 2000, 2000);
-        //eftop.paint(g);
+        eftop.paint(g);
         if (f != null) {
             f.update(top);
             f.paint(g2);
@@ -105,7 +105,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         t.savePoints();
     }
 
-    public Main() throws IOException {
+    public OverlayDemo() throws IOException {
         JFrame f = new JFrame("LaFireSim2025");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

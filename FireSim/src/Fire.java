@@ -6,10 +6,10 @@ import java.util.List;
 public class Fire {
     private Polygon firePolygon;
     public List<Point> firePoints;  // All current outer points (used to build polygon)
-    private double ROC;
+    public double ROC;
     private double duePoints;
 
-    private static final int SPREADTHRESHOLD = 3;
+    private static final int SPREADTHRESHOLD = 2;
 
     private int initZ;
 
@@ -17,7 +17,7 @@ public class Fire {
 
     public Fire(int initx, int inity, Topography top) {
         this.firePoints = new ArrayList<>();
-        this.ROC = 57;
+        this.ROC = 1;
         this.duePoints = 0;
         this.rand = new Random(System.currentTimeMillis());
 
@@ -54,7 +54,7 @@ public class Fire {
         g.fillPolygon(firePolygon);
         g.setColor(Color.BLACK);
         for (Point p: firePoints) {
-            g.fillRect(p.x-5,p.y-5,10,10);
+            //g.fillRect(p.x-5,p.y-5,10,10);
         }
     }
 
