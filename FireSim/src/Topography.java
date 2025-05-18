@@ -23,6 +23,10 @@ public class Topography {
         int minZ = Integer.MAX_VALUE;
         int maxZ = Integer.MIN_VALUE;
 
+        if (interpolateZ(0,0) == -1.111111) {
+            return;
+        }
+
         for (Point3D p : this.points) {
             if (p.z < minZ) minZ = p.z;
             if (p.z > maxZ) maxZ = p.z;
@@ -71,7 +75,7 @@ public class Topography {
 
     public double interpolateZ(double x, double y) {
         if (points.isEmpty()) {
-            throw new IllegalStateException("No points in topography.");
+            return -1.111111;
         }
 
         double numerator = 0.0;
