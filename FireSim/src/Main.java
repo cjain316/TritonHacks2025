@@ -102,7 +102,8 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
         t.start();
         f.setVisible(true);
 
-        top = new Topography("28.75 85.0 28.6 85.25");
+        top = new Topography("27.9719 86.9669 28.0116 86.8764");
+        //calculateTopFromReqs();
     }
 
     @Override

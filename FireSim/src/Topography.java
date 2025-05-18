@@ -6,8 +6,8 @@ public class Topography {
     private ArrayList<Point3D> points;
     private static final double EPSILON = 1e-6;
 
-    public WorldPoint topLeft = new WorldPoint(28.75, 85);
-    public WorldPoint bottomRight = new WorldPoint(28.6, 85.25);
+    public WorldPoint topLeft = new WorldPoint(27.9719, 86.9669);
+    public WorldPoint bottomRight = new WorldPoint(28.0116, 86.8764);
 
     public final int WIDTH = 1920;
     public final int HEIGHT = 1080;
@@ -17,10 +17,13 @@ public class Topography {
     }
 
     public Topography(String filename) {
+        System.out.println("Gathering metadata...");
         String[] vals = filename.split("\\s+");
         this.topLeft = new WorldPoint(Double.parseDouble(vals[0]), Double.parseDouble(vals[1]));
         this.bottomRight = new WorldPoint(Double.parseDouble(vals[2]), Double.parseDouble(vals[3]));
+        System.out.println("Done");
 
+        System.out.println("Gathering points...");
         this.points = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -39,7 +42,7 @@ public class Topography {
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
-
+        System.out.println("Done");
     }
 
     public void addPoint(Point3D point) {
@@ -74,6 +77,7 @@ public class Topography {
 
                 g.setColor(new Color(red, green, 0));
                 g.fillRect(x, y, 1, 1);
+                System.out.println("Calculated pixel: " + (x*1920 + y + 1) + " of " + (1920*1200));
             }
         }
 
