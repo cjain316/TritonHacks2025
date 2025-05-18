@@ -9,13 +9,19 @@ public class Fire {
     private double ROC;
     private double duePoints;
 
+    private static final int SPREADTHRESHOLD = 3;
+
+    private int initZ;
+
     private Random rand;
 
-    public Fire(int initx, int inity) {
+    public Fire(int initx, int inity, Topography top) {
         this.firePoints = new ArrayList<>();
         this.ROC = 57;
         this.duePoints = 0;
         this.rand = new Random(System.currentTimeMillis());
+
+        this.initZ = (int) top.interpolateZ(initx, inity);
 
         int size = 5;
         firePolygon = new Polygon();
@@ -30,11 +36,11 @@ public class Fire {
         ));
     }
 
-    public void update() {
+    public void update(Topography top) {
         this.duePoints += ROC;
 
         for (int i = 0; i < (int)(duePoints); i++) {
-            Point newPoint = generatePointNearBorder();
+            Point newPoint = generatePointNearBorder(top);
             if (newPoint != null && !firePolygon.contains(newPoint)) {
                 firePoints.add(newPoint);
                 rebuildPolygon();
@@ -53,7 +59,7 @@ public class Fire {
     }
 
     // Generate a new point at a threshold distance away from the polygon border
-    private Point generatePointNearBorder() {
+    private Point generatePointNearBorder(Topography top) {
         int maxTries = 100;
 
         for (int i = 0; i < maxTries; i++) {
@@ -72,7 +78,14 @@ public class Fire {
             int threshold = 3;
             int newX = edgeX + (int)(threshold * Math.cos(angle));
             int newY = edgeY + (int)(threshold * Math.sin(angle));
-            return new Point(newX, newY);
+
+            if (
+                    top.interpolateZ(newX, newY) < this.initZ + SPREADTHRESHOLD &&
+                    top.interpolateZ(newX, newY) > this.initZ - SPREADTHRESHOLD &&
+                    newX < 1920 && newY < 1200 && newY > 0 && newX > 0
+            ) {
+                return new Point(newX, newY);
+            }
         }
 
         return null;

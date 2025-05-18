@@ -6,14 +6,16 @@ public class Topography {
     private ArrayList<Point3D> points;
     private static final double EPSILON = 1e-6;
 
-    public WorldPoint topLeft = new WorldPoint(27.9719, 86.9669);
-    public WorldPoint bottomRight = new WorldPoint(28.0116, 86.8764);
+    public WorldPoint topLeft;
+    public WorldPoint bottomRight;
 
     public final int WIDTH = 1920;
     public final int HEIGHT = 1080;
 
-    public Topography() {
+    public Topography(WorldPoint tl, WorldPoint br) {
         this.points = new ArrayList<>();
+        this.topLeft = tl;
+        this.bottomRight = br;
     }
 
     public Topography(String filename) {
@@ -118,12 +120,14 @@ public class Topography {
     public double interpolateZ(double x, double y) {
         if (points.isEmpty()) {return -1000000;}
 
+        double ty = 1200-y;
+
         double numerator = 0.0;
         double denominator = 0.0;
 
         for (Point3D p : points) {
             double dx = p.x - x;
-            double dy = p.y - y;
+            double dy = p.y - ty;
             double distanceSquared = dx * dx + dy * dy;
 
             if (distanceSquared < EPSILON) {return p.z;}
