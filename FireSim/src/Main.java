@@ -17,8 +17,8 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
 
     public ArrayList<WorldPoint> getRequestPoints() {
         ArrayList<WorldPoint> loc = new ArrayList<WorldPoint>();
-        for (int x = 0; x < 1920; x += 5) {
-            for (int y = 0; y < 1200; y += 5) {
+        for (int x = 0; x < 1920; x += 10) {
+            for (int y = 0; y < 1200; y += 10) {
                 loc.add(top.getWorldCoords(new Point(x, y)));
             }
         }
@@ -44,24 +44,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
 
     Timer t;
 
-    public Main() throws IOException {
-        JFrame f = new JFrame("LaFireSim2025");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        f.add(this);
-        f.addKeyListener(this);
-        f.addMouseListener(this);
-
-        ImageIcon img = new ImageIcon("favicon.png");
-        f.setIconImage(img.getImage());
-
-        f.setResizable(true);
-        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        t = new Timer(1, this);
-        t.start();
-        f.setVisible(true);
-
+    public void calculateTopFromReqs() throws IOException {
         ArrayList<WorldPoint> locations = getRequestPoints();
         System.out.println(locations.size());
 
@@ -72,7 +55,7 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
             //double lon = (double)Math.round(p.longitude * 10000000d) / 10000000d;
             //System.out.println(locations.get(i).longitude);
             url += ""+locations.get(i).longitude+"%2C"+locations.get(i).latitude+"|";
-            if (i % 450 == 0 && i != 0) {
+            if (i % 400 == 0 && i != 0) {
                 url = url.substring(0,url.length()-1);
                 System.out.println(url);
                 String fin = req.get(url);
@@ -98,6 +81,28 @@ public class Main extends JPanel implements KeyListener, ActionListener, MouseLi
                 url = "json?locations=";
             }
         }
+        top.savePoints();
+    }
+
+    public Main() throws IOException {
+        JFrame f = new JFrame("LaFireSim2025");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        f.add(this);
+        f.addKeyListener(this);
+        f.addMouseListener(this);
+
+        ImageIcon img = new ImageIcon("favicon.png");
+        f.setIconImage(img.getImage());
+
+        f.setResizable(true);
+        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        t = new Timer(1, this);
+        t.start();
+        f.setVisible(true);
+
+        top = new Topography("28.75 85.0 28.6 85.25");
     }
 
     @Override

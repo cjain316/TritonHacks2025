@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Topography {
@@ -13,6 +14,32 @@ public class Topography {
 
     public Topography() {
         this.points = new ArrayList<>();
+    }
+
+    public Topography(String filename) {
+        String[] vals = filename.split("\\s+");
+        this.topLeft = new WorldPoint(Double.parseDouble(vals[0]), Double.parseDouble(vals[1]));
+        this.bottomRight = new WorldPoint(Double.parseDouble(vals[2]), Double.parseDouble(vals[3]));
+
+        this.points = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] tokens = line.trim().split("\\s+");
+                if (tokens.length != 3) continue;
+
+                int x = Integer.parseInt(tokens[0]);
+                int y = Integer.parseInt(tokens[1]);
+                int z = Integer.parseInt(tokens[2]);
+
+                points.add(new Point3D(x, y, z));
+            }
+
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
     }
 
     public void addPoint(Point3D point) {
@@ -54,6 +81,20 @@ public class Topography {
 //            g.setColor(Color.BLACK);
 //            g.fillRect(p.x-2,p.y-2,4,4);
 //        }
+    }
+
+    public void savePoints() {
+        String filePath = topLeft.latitude + " " + topLeft.longitude + " " + bottomRight.latitude + " " + bottomRight.longitude;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (Point3D point : points) {
+                String line = point.x + " " + point.y + " " + point.z;
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("Points written successfully to " + filePath);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
     }
 
     public WorldPoint getWorldCoords(Point p) {
